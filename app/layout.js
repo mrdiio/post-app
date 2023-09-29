@@ -1,5 +1,7 @@
+import { ThemeProvider } from '@/components/theme-provider'
 import './globals.css'
 import { Inter } from 'next/font/google'
+import Nav from '@/components/Nav'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -10,8 +12,16 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang="en" suppressHydrationWarning>
+      <body className={inter.className}>
+        <ThemeProvider attribute="class" defaultTheme="system">
+          <main className="min-h-screen container py-6">
+            <Nav />
+
+            {children}
+          </main>
+        </ThemeProvider>
+      </body>
     </html>
   )
 }
