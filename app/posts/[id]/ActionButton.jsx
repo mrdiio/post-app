@@ -12,7 +12,6 @@ export default function ActionButton({ id }) {
 
   const { mutate, isLoading } = useMutation(
     () => {
-      console.log('delete')
       return deletePost(id)
     },
     {

@@ -62,7 +62,7 @@ export default function FormPost({
             <FormItem>
               <FormLabel>Title</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input placeholder="Type your title here." {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
