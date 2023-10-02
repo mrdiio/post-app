@@ -26,7 +26,7 @@ export default function Edit({ params }) {
 
   return (
     <main className="py-10">
-      <h1 className="text-4xl font-semibold text-center pb-10">Add New Post</h1>
+      <h1 className="text-4xl font-semibold text-center pb-10">Update Post</h1>
 
       <div className="container max-w-lg mx-auto">
         {data && (
