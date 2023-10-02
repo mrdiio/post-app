@@ -1,4 +1,3 @@
-'use client'
 import { useForm } from 'react-hook-form'
 import {
   Form,
@@ -22,6 +21,7 @@ import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useQuery } from '@tanstack/react-query'
 import { getTags } from '@/services/tagService'
+import Loading from './Loading'
 
 const formSchema = z.object({
   title: z.string().min(3),
@@ -29,29 +29,30 @@ const formSchema = z.object({
   tagId: z.string().min(3),
 })
 
-export default function FormPost() {
-  const form = useForm({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      title: '',
-      // content: '',
-      // tagId: '',
-    },
-  })
-
-  const onSubmit = (values, e) => {
-    console.log(values)
-  }
-
-  const { data, isLoading } = useQuery(['tags'], getTags, {
+export default function FormPost({
+  submit,
+  isEditing = false,
+  submitLoading = false,
+  defaultValues = {
+    title: '',
+    content: '',
+    tagId: '',
+  },
+}) {
+  const { data, isLoading } = useQuery(['tags'], () => getTags(), {
     refetchOnWindowFocus: false,
     refetchOnMount: false,
+  })
+
+  const form = useForm({
+    resolver: zodResolver(formSchema),
+    defaultValues,
   })
 
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(onSubmit)}
+        onSubmit={form.handleSubmit(submit)}
         className="flex flex-col gap-5"
       >
         <FormField
@@ -75,11 +76,7 @@ export default function FormPost() {
             <FormItem>
               <FormLabel>Content</FormLabel>
               <FormControl>
-                <Textarea
-                  placeholder="Type your message here."
-                  id="message"
-                  {...field}
-                />
+                <Textarea placeholder="Type your message here." {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -92,6 +89,7 @@ export default function FormPost() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Tag</FormLabel>
+
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
@@ -110,9 +108,19 @@ export default function FormPost() {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-fit flex items-end">
-          Submit
-        </Button>
+
+        <div className="flex justify-end">
+          <Button type="submit">
+            {submitLoading && <Loading />}
+            {isEditing
+              ? submitLoading
+                ? 'Updating...'
+                : 'Update'
+              : submitLoading
+              ? 'Creating...'
+              : 'Create'}
+          </Button>
+        </div>
       </form>
     </Form>
   )

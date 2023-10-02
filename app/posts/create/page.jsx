@@ -1,22 +1,28 @@
+'use client'
 import FormPost from '@/components/FormPost'
-import getQueryClient from '@/lib/react-query/getQueryClient'
-import Hydrate from '@/lib/react-query/hydratedClient'
-import { getTags } from '@/services/tagService'
-import { dehydrate } from '@tanstack/react-query'
+import { storePost } from '@/services/postService'
+import { useMutation } from '@tanstack/react-query'
+import { useRouter } from 'next/navigation'
 
-export default async function Create({ props }) {
-  const queryClient = getQueryClient()
-  await queryClient.prefetchQuery(['tags'], getTags)
-  const dehydratedState = dehydrate(queryClient)
+export default function Create() {
+  const router = useRouter()
+
+  const { mutate, isLoading } = useMutation((values) => storePost(values), {
+    onSuccess: () => {
+      router.push(`/`)
+      router.refresh()
+    },
+    onError: (error) => {
+      console.log(error)
+    },
+  })
 
   return (
     <main className="py-10">
       <h1 className="text-4xl font-semibold text-center pb-10">Add New Post</h1>
 
       <div className="container max-w-lg mx-auto">
-        <Hydrate state={dehydratedState}>
-          <FormPost />
-        </Hydrate>
+        <FormPost submit={mutate} submitLoading={isLoading} />
       </div>
     </main>
   )

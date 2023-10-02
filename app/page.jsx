@@ -1,8 +1,15 @@
 import { Button } from '@/components/ui/button'
-import Nav from '../components/Nav'
-import PostCard from '@/components/PostCard'
+import PostsCard from '@/components/PostsCard'
+import getQueryClient from '@/lib/react-query/getQueryClient'
+import Hydrate from '@/lib/react-query/hydratedClient'
+import { getPosts } from '@/services/postService'
+import { dehydrate } from '@tanstack/react-query'
 
-export default function Home() {
+export default async function Home() {
+  const queryClient = getQueryClient()
+  await queryClient.prefetchQuery(['posts'], getPosts)
+  const dehydratedState = dehydrate(queryClient)
+
   return (
     <section className="py-20 flex flex-col gap-10">
       <div className=" mb-10 flex flex-col items-center text-center gap-10">
@@ -16,12 +23,10 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-4">
-        <PostCard />
-        <PostCard />
-        <PostCard />
-        <PostCard />
-        <PostCard />
+      <div className="grid md:grid-cols-3 gap-4">
+        <Hydrate state={dehydratedState}>
+          <PostsCard />
+        </Hydrate>
       </div>
     </section>
   )
