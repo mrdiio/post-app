@@ -7,6 +7,7 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { Button } from './ui/button'
+import Link from 'next/link'
 
 export default function PostCard() {
   return (
@@ -18,7 +19,9 @@ export default function PostCard() {
         <p>Card Content</p>
       </CardContent>
       <CardFooter className="flex justify-end">
-        <Button>Detail</Button>
+        <Button asChild>
+          <Link href="/posts/1">Detail</Link>
+        </Button>
       </CardFooter>
     </Card>
   )

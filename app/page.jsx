@@ -16,7 +16,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-3 gap-4">
         <PostCard />
         <PostCard />
         <PostCard />
