@@ -89,11 +89,21 @@ export default function FormPost({
           render={({ field }) => (
             <FormItem>
               <FormLabel>Tag</FormLabel>
-
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select tag" />
+                    <SelectValue
+                      placeholder={
+                        isLoading ? (
+                          <div className="flex items-center">
+                            <Loading />
+                            Loading ...
+                          </div>
+                        ) : (
+                          'Select Tag'
+                        )
+                      }
+                    />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
