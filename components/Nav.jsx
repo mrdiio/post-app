@@ -1,10 +1,9 @@
-import Image from 'next/image'
 import { ModeToggle } from './ui/mode-toggle'
 import Link from 'next/link'
 import { Button } from './ui/button'
 import { BookOpen } from 'lucide-react'
 
-export default function Nav() {
+export default async function Nav() {
   return (
     <header className="w-full">
       <div className="flex items-center justify-between">
@@ -19,6 +18,12 @@ export default function Nav() {
           <ModeToggle />
           <Button asChild>
             <Link href="/posts/create">Create Post</Link>
+          </Button>
+          {/* <Button asChild>
+            <Link href="/api/auth/signout">Sign Out</Link>
+          </Button> */}
+          <Button asChild>
+            <Link href="/api/auth/signin">Sign In</Link>
           </Button>
         </div>
       </div>
