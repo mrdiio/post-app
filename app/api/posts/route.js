@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server'
 
 export async function GET() {
   try {
-    const tags = await db.post.findMany({
+    const posts = await db.post.findMany({
       select: {
         id: true,
         title: true,
@@ -14,7 +14,8 @@ export async function GET() {
         createdAt: 'desc',
       },
     })
-    return NextResponse.json(tags)
+
+    return NextResponse.json(posts)
   } catch (error) {
     return NextResponse.error()
   }

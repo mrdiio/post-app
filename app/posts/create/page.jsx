@@ -1,11 +1,15 @@
 'use client'
+import { authOptions } from '@/app/api/auth/[...nextauth]/route'
 import FormPost from '@/components/FormPost'
 import { storePost } from '@/services/postService'
 import { useMutation } from '@tanstack/react-query'
+import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 
 export default function Create() {
   const router = useRouter()
+
+  console.log('halooo')
 
   const { mutate, isLoading } = useMutation((values) => storePost(values), {
     onSuccess: () => {
