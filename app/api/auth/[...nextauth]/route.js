@@ -4,6 +4,9 @@ import NextAuth from 'next-auth'
 import GithubProvider from 'next-auth/providers/github'
 
 export const authOptions = {
+  session: {
+    strategy: 'jwt',
+  },
   secret: process.env.NEXTAUTH_SECRET,
   adapter: PrismaAdapter(db),
   providers: [
@@ -12,22 +15,8 @@ export const authOptions = {
       clientSecret: process.env.GITHUB_SECRET,
     }),
   ],
-  callbacks: {
-    session: async ({ session, user }) => ({
-      ...session,
-      user: {
-        ...session.user,
-        random: 'random',
-      },
-    }),
-    jwt: async ({ token, user }) => {
-      if (user) {
-        token.random = 'random'
-      }
-      return token
-    },
-  },
 }
+
 const handler = NextAuth(authOptions)
 
 export { handler as GET, handler as POST }

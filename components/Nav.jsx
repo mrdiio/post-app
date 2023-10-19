@@ -18,6 +18,11 @@ export default async function Nav() {
           </span>
         </Link>
 
+        <div>
+          <Link href="/server"> Server </Link>
+          <Link href="/extra"> Extra </Link>
+        </div>
+
         <div className="flex items-center gap-5">
           <ModeToggle />
           <Button asChild>

@@ -9,7 +9,9 @@ import { useRouter } from 'next/navigation'
 export default function Create() {
   const router = useRouter()
 
-  console.log('halooo')
+  const { data: session } = useSession(authOptions)
+
+  console.log(session)
 
   const { mutate, isLoading } = useMutation((values) => storePost(values), {
     onSuccess: () => {

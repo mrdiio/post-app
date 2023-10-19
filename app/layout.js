@@ -16,15 +16,17 @@ export default function RootLayout({ children, session }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-        <Providers>
-          <ThemeProvider attribute="class" defaultTheme="system">
-            <main className="min-h-screen container py-6">
-              <Nav />
+        <SessionProvider>
+          <Providers>
+            <ThemeProvider attribute="class" defaultTheme="system">
+              <main className="min-h-screen container py-6">
+                <Nav />
 
-              {children}
-            </main>
-          </ThemeProvider>
-        </Providers>
+                {children}
+              </main>
+            </ThemeProvider>
+          </Providers>
+        </SessionProvider>
       </body>
     </html>
   )
